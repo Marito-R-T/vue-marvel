@@ -1,8 +1,6 @@
 <script setup lang="ts">
 
 import { onMounted } from 'vue';
-import { inject } from 'vue'
-const axios = inject('axios')
 
 defineProps<{
   title: String,
@@ -14,16 +12,6 @@ defineProps<{
 }>()
 
 const mounted = () => {
-  axios.get('v1/public/series', {
-    params: {
-      titleStartsWith:"Hulk"
-    }
-  }).then((res: any) => {
-    console.log(res)
-  })
-  
-  // Your mounted method logic here
-  console.log("holas")
 };
 
 onMounted(mounted);

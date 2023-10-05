@@ -1,26 +1,52 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import type { Serie } from '../types/Serie'
+//import TheWelcome from '../components/TheWelcome.vue'
+import type {Axios} from 'axios'
 import SerieCard from '../components/cards/SerieCard.vue'
-import { Serie } from '../types/Serie.ts'
+import { inject, onMounted, reactive } from 'vue';
 
-const series: Serie[] = []
+const axios:Axios|undefined = inject('axios')
+
+const series: Array<Serie> = reactive(new Array<Serie>)
+
+const mounted = () => {
+  axios?.get('v1/public/series', {
+    params: {
+      titleStartsWith:"Hulk"
+    }
+  }).then((res: any) => {
+    console.log(res);
+    console.log(res.data.data.results)
+    series.push(...res.data.data.results);
+    console.log(series)
+  }).catch((err: Error) => {
+    console.log(err)
+  });
+};
+
+onMounted(mounted);
 
 </script>
 
 <template>
-  <main>
+  <div class="container">
     <SerieCard
       v-for="serie in series"
       :key="serie.id"
-      title="title"
+      :title="serie.title"
       type="type"
       :years="5"
       relatedResources="related"
       image="image"
-      :id="1"
-    >
-
-    </SerieCard>
-    <!--<TheWelcome />-->
-  </main>
+      :id="serie.id"
+    />
+  </div>
 </template>
+
+<style scoped>
+.container {
+	display: inline;
+  justify-content: center;
+  width: 1200px;
+}
+</style>
