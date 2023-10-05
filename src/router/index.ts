@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import ErrorView from '../views/ErrorView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,6 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      meta: {title: 'Marvel App'},
       component: HomeView
     },
     {
@@ -21,6 +23,11 @@ const router = createRouter({
       path: '/detail/:id',
       name: 'detail',
       component: () => import('../views/detail/DetailView.vue')
+    },
+    {
+      path: '/error',
+      name: 'error',
+      component: ErrorView
     }
   ]
 })
