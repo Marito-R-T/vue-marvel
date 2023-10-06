@@ -14,3 +14,11 @@ export class Stories {
         return `${this.available} stories`
     }
 }
+
+export class FullStory {
+    name!: string
+    type!: string
+    title!: string
+    modified!: Date
+    description!: string
+}

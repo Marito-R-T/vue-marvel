@@ -12,3 +12,9 @@ export class Characters {
         return `${this.available} characters`
     }
 }
+
+export class FullCharacter {
+    name!: string
+    description!: string
+    modified!: Date
+}

@@ -35,10 +35,10 @@ onMounted(mounted);
 <template>
 	<router-link
 			class="event-link"
-			:to="`detail/${id}`"
+			:to="`/detail/${id}`"
 		>
 		<div class="event-card">
-			<img :src="image" alt="Card image" />
+			<img :src="image.toString()" alt="Card image" />
 			<h2 class="container">{{ title }}</h2>
 			<p v-if="type"><b class="large-text container">Tipo: </b>{{ type }}</p>
 			<p class="container">{{ `Year started: ${startYear} and ${finishYear}` }}</p>
@@ -56,9 +56,9 @@ onMounted(mounted);
 <style scoped>
 .container {
 	display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  	justify-content: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
 	padding: 15px 0px 0px 0px;
 	align-content: center;
 }

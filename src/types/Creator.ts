@@ -13,3 +13,10 @@ export class Creators {
         return `${this.available} creators`
     }
 }
+
+export class FullCreator {
+    firstName!: string
+    middleName !: string
+    lastName!: string
+    modified!: Date
+}

@@ -1,51 +1,45 @@
 <script setup lang="ts">
-import { inject, onBeforeMount, reactive, ref } from 'vue';
-import {Axios} from 'axios'
-import type { Serie } from '@/types/Serie';
-import { useRoute } from 'vue-router';
+import { defineAsyncComponent, onErrorCaptured } from 'vue';
+import LoadingSpin from '@/components/LoadingSpin.vue';
+import { useRouter } from 'vue-router';
 
-const axios:Axios|undefined = inject('axios')
-const route = useRoute()
+const router = useRouter()
 
-const serie:any = reactive({})
-const loading = ref(true)
+const ProfileSerie = defineAsyncComponent(() =>
+  import('@/components/profiles/SerieProfile.vue')
+);
 
-axios?.get(`v1/public/series/${route.params.id}`, {
-  }).then((res: any) => {
-    console.log(res)
-    let s: Serie = {...res.data.data.results[0]};
-    serie.id = s.id;
-    serie.characters = s.characters;
-    serie.creators = s.creators;
-    serie.comics = s.comics;
-    serie.stories = s.stories;
-    serie.endYear = s.endYear;
-    serie.startYear = s.startYear;
-    serie.type = s.type;
-    serie.thumbnail = s.thumbnail;
-    serie.title = s.title;
-  }).catch((err: Error) => {
-    console.log(err)
-  }).finally(() => {
-    loading.value = false;
-  });
+const onerrorcaptured = () => {
+  router.replace({ path: '/error' })
+}
 
-//onBeforeMount(onbeforemount),
+onErrorCaptured(onerrorcaptured);
 
 </script>
 
 <template>
-  <div class="detail">
-    <h1>This is an about page {{ serie.id }}</h1>
+  <div class="container">
+    <Suspense >
+      <template #default>
+        <ProfileSerie></ProfileSerie>
+      </template>
+      <template #fallback>
+        <LoadingSpin class="loading"></LoadingSpin>
+      </template>
+    </Suspense>
   </div>
 </template>
 
 <style>
-@media (min-width: 1024px) {
-  .detail {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+
+.loading {
+  width: 100%;
+}
+
+.container {
+	display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 97vw;
 }
 </style>

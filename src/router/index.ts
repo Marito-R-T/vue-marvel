@@ -25,6 +25,11 @@ const router = createRouter({
       component: () => import('../views/detail/DetailView.vue')
     },
     {
+      path: '/history',
+      name: 'history',
+      component: () => import('../views/history/History.vue')
+    },
+    {
       path: '/error',
       name: 'error',
       component: ErrorView

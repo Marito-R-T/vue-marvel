@@ -16,7 +16,7 @@ const page = ref(1);
 
 const onScroll = (e: Event) => {
   let scrollHeight = window.scrollY + window.innerHeight + 1
-  if(scrollHeight > document.body.scrollHeight) {
+  if(scrollHeight > document.body.scrollHeight && !loading.value) {
     fetchSeries()
   }
 }
@@ -26,7 +26,7 @@ const fetchSeries = () => {
   axios?.get('v1/public/series', {
       params: {
         limit: 20,
-        offset: page.value - 1
+        offset: (page.value - 1)*20
       }
     }).then((res: any) => {
       series.push(...res.data.data.results);
@@ -90,6 +90,6 @@ onErrorCaptured(onerrorcaptured);
 	display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  width: 97vw;
+  width: 99vw;
 }
 </style>

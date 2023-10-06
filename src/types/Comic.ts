@@ -12,3 +12,11 @@ export class Comics implements Resources {
         return `${this.available} comics`
     }
 }
+
+export class FullComic {
+    title!: string
+    description!: string
+    format!: string
+    pageCount!: number
+    modified!: Date
+}
