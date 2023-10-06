@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, inject, onErrorCaptured, ref } from 'vue';
+import { computed, defineAsyncComponent, inject, onErrorCaptured, onMounted, ref } from 'vue';
 import {Axios} from 'axios'
 import type { Serie } from '@/types/Serie';
 import { useRoute, useRouter } from 'vue-router';
 import type { MarvelResponse } from '@/types/MarvelResponse';
-import { useSeriesStore } from '@/stores/series';
+import { useHistoryStore, useSeriesStore } from '@/stores/series';
 import LoadingSpin from '@/components/LoadingSpin.vue';
 import type CreatorCardVue from '../cards/CreatorCard.vue';
 
 const axios:Axios|undefined = inject('axios')
 const store = useSeriesStore()
+const storeHistory = useHistoryStore()
 const route = useRoute()
 const router = useRouter()
 
@@ -59,6 +60,11 @@ const onerrorcaptured = () => {
   router.replace({ path: '/error' })
 }
 
+const mounted = () => {
+  storeHistory.addSerie(serie);
+};
+
+onMounted(mounted);
 onErrorCaptured(onerrorcaptured);
 
 </script>

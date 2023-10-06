@@ -47,7 +47,8 @@ import HelloWorld from './components/HelloWorld.vue'
 	margin-left: 20px;
 }
 .full-width {
-	width: 100%;
+	width: 100vw;
+	height: 100vh;
 }
 .nav-bar {
 	height: 50px;

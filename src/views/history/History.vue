@@ -1,15 +1,57 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+import { useHistoryStore, useSeriesStore } from '@/stores/series';
+import { onMounted } from 'vue';
+import SerieCard from '@/components/cards/SerieCard.vue';
+import HistorySerieCard from '@/components/cards/HistorySerieCard.vue';
+
+const store = useSeriesStore()
+const storeHistory = useHistoryStore()
+
+const mounted = () => {
+  console.log(store.getSeries)
+  console.log(storeHistory.getSeries)
+};
+
+onMounted(mounted);
 </script>
 
 <template>
   <div class="container">
+    <div class="saved-container">
+      <h1 class="full-width">SAVED</h1>
+      <SerieCard
+        v-for="serie in store.getSeries"
+        :key="serie.id"
+        :title="serie.title"
+        :type="serie.type"
+        :startYear="serie.startYear"
+        :endYear="serie.endYear"
+        :characters="serie.characters"
+        :stories="serie.stories"
+        :comics="serie.comics"
+        :creators="serie.creators"
+        :image="`${serie.thumbnail.path}.${serie.thumbnail.extension}`"
+        :id="serie.id"
+      />
+    </div>
+    <div class="history-container">
+      <HistorySerieCard 
+        v-for="(serie, index) in storeHistory.getSeries" 
+        :key="'h'+index"
+        :id="serie.id"
+        :title="serie.title"
+        :image="`${serie.thumbnail.path}.${serie.thumbnail.extension}`"
+      >
+      </HistorySerieCard>
+    </div>
   </div>
 </template>
 
-<style>
-
-.loading {
+<style scoped>
+.full-width {
   width: 100%;
+	padding: 20px 0px 20px 10px;
 }
 
 .container {
@@ -17,6 +59,15 @@
   justify-content: center;
   flex-wrap: wrap;
   width: 98vw;
-  min-height: 100vh;
+}
+
+.saved-container {
+	display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 60%;
+}
+.history-container {
+  width: 40%;
 }
 </style>

@@ -39,10 +39,10 @@ onMounted(mounted);
 		>
 		<div class="event-card">
 			<img :src="image.toString()" alt="Card image" />
-			<h2 class="container">{{ title }}</h2>
-			<p v-if="type"><b class="large-text container">Tipo: </b>{{ type }}</p>
-			<p class="container">{{ `Year started: ${startYear} and ${finishYear}` }}</p>
-			<div class="container">
+			<h2 class="container-data">{{ title }}</h2>
+			<p v-if="type"><b class="large-text container-data">Tipo: </b>{{ type }}</p>
+			<p class="container-data">{{ `Year started: ${startYear} and ${finishYear}` }}</p>
+			<div class="container-data">
 				<b class="large-text">Sources</b>
 				<p class="source-tag">{{ totalCharacters  }}</p> 
 				<p class="source-tag">{{ totalCreators  }}</p>
@@ -54,7 +54,7 @@ onMounted(mounted);
 </template>
 
 <style scoped>
-.container {
+.container-data {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
