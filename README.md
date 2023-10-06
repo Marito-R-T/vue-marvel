@@ -26,6 +26,19 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ```sh
 npm install
 ```
+```Env File
+    #Marvel api url
+    VITE_MARVEL_URL=https://gateway.marvel.com/
+
+    #public key for the api marvel profile
+    VITE_PUBLIC_KEY=558432cb6d3856550cab17969f3e2368
+
+    #secret key for the api marvel profile
+    VITE_PRIVATE_KEY=1cca2b5bb814ca7a95bb7dbad1573904442a5d86
+
+    #numer, example: 2
+    VITE_CUSTOM_KEY=1
+```
 
 ### Compile and Hot-Reload for Development
 

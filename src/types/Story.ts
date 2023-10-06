@@ -10,7 +10,6 @@ export class Stories {
     items!: Array<Story>
 
     totalResources(): string {
-        console.log("Total resources")
         return `${this.available} stories`
     }
 }

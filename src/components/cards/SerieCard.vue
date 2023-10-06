@@ -4,8 +4,9 @@ import { Characters } from '@/types/Character';
 import { Comics } from '@/types/Comic';
 import { Creators } from '@/types/Creator';
 import { Stories } from '@/types/Story';
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 
+// Define component props with specified types
 const props = defineProps<{
 	title: String,
 	type: String,
@@ -19,16 +20,14 @@ const props = defineProps<{
 	id: Number
 }>()
 
+// Computed property to display the finish year or 'continuing'
 const finishYear = computed(() => props.endYear === 2099 ? 'and continuing' : `Finish Year: ${props.endYear}`)
+
+// Computed properties to display totals for various data categories
 const totalCharacters = computed(() => props.characters.available ? `${props.characters.available} characters`: '');
 const totalCreators = computed(() => props.creators.available ? `${props.creators.available} creators`: '');
 const totalStories = computed(() => props.stories.available ? `${props.stories.available} stories`: '');
 const totalComics = computed(() => props.comics.available ? `${props.comics.available} comics`: '');
-
-const mounted = () => {
-};
-
-onMounted(mounted);
 
 </script>
 

@@ -1,7 +1,7 @@
-import type { Character, Characters } from "./Character"
-import type { Comic, Comics } from "./Comic"
-import type { Creator, Creators } from "./Creator"
-import type { Stories, Story } from "./Story"
+import type { Characters } from "./Character"
+import type { Comics } from "./Comic"
+import type { Creators } from "./Creator"
+import type { Stories } from "./Story"
 import type { Thumbnail } from "./Thumbnail"
 
 export class Serie {

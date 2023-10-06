@@ -3,6 +3,9 @@
 import axios from 'axios'
 import type {App} from 'vue'
 import {Md5} from 'ts-md5';
+const publicKey = import.meta.env.VITE_PUBLIC_KEY;
+const privateKey = import.meta.env.VITE_PRIVATE_KEY;
+const customKey = import.meta.env.VITE_CUSTOM_KEY;
 
 interface AxiosOptions {
     baseUrl?: string
@@ -13,9 +16,9 @@ export default {
         const ax = axios.create({
             baseURL: options.baseUrl,
             params: {
-                ts:"1",
-                apikey: "558432cb6d3856550cab17969f3e2368",
-                hash: Md5.hashStr("11cca2b5bb814ca7a95bb7dbad1573904442a5d86558432cb6d3856550cab17969f3e2368")
+                ts:customKey,
+                apikey: publicKey,
+                hash: Md5.hashStr(`${customKey}${privateKey}${publicKey}`),
             },
             headers: {
 

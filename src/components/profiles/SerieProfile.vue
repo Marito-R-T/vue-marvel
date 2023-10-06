@@ -6,14 +6,18 @@ import { useRoute, useRouter } from 'vue-router';
 import type { MarvelResponse } from '@/types/MarvelResponse';
 import { useHistoryStore, useSeriesStore } from '@/stores/series';
 import LoadingSpin from '@/components/LoadingSpin.vue';
-import type CreatorCardVue from '../cards/CreatorCard.vue';
 
+// Import the Axios instance and inject it as a dependency
 const axios:Axios|undefined = inject('axios')
+
+
+// Import store modules and router utilities
 const store = useSeriesStore()
 const storeHistory = useHistoryStore()
 const route = useRoute()
 const router = useRouter()
 
+// Define async components for various card types
 const StoryCard = defineAsyncComponent(() =>
   import('@/components/cards/StoryCard.vue')
 );
@@ -27,43 +31,50 @@ const CharacterCard = defineAsyncComponent(() =>
   import('@/components/cards/CharacterCard.vue')
 );
 
+// Fetch data for a Marvel series using Axios
 const data:MarvelResponse = await new Promise((resolve, reject) => {
   axios?.get(`v1/public/series/${route.params.id}`, {}).then((res) => {
-    console.log(res);
     resolve(res);
-  }).catch(() => {
+  }).catch((err) => {
+    console.log(err);
     reject({});
   })
 });
 
-//const res = await axios?.get(`v1/public/series/${route.params.id}`, {});
+// Extract the series data from the fetched response
 const serie:Serie =  data.data.data.results[0];
 
+// Create a reactive flag to check if the series is added to the store
 const isAdded = ref(computed(() => {
   let series = store.getSeries;
   return series.find((s) => s.id === serie.id) ? true : false
 }));
+
+// Computed properties to display totals for various data categories
 const totalCharacters = computed(() => serie.characters.available ? `${serie.characters.available} characters`: '');
 const totalCreators = computed(() => serie.creators.available ? `${serie.creators.available} creators`: '');
 const totalStories = computed(() => serie.stories.available ? `${serie.stories.available} stories`: '');
 const totalComics = computed(() => serie.comics.available ? `${serie.comics.available} comics`: '');
 
+// Function to save the series to the store
 const saveResource = () => {
   if(!store.addSerie(serie)){
     alert("Saved Items Reach the limit")
-    console.log(isAdded);
   }
-  console.log(isAdded);
 }
 
+// Function to handle error capturing
 const onerrorcaptured = () => {
   router.replace({ path: '/error' })
 }
 
+// Function to be executed when the component is mounted
 const mounted = () => {
+  // Add the series to the history store
   storeHistory.addSerie(serie);
 };
 
+// Execute the mounted and error capturing functions when appropriate
 onMounted(mounted);
 onErrorCaptured(onerrorcaptured);
 
@@ -94,7 +105,7 @@ onErrorCaptured(onerrorcaptured);
   <div class="detail">
     <Suspense >
       <template #default>
-        <StoryCard></StoryCard>
+        <StoryCard>Related Stories</StoryCard>
       </template>
       <template #fallback>
         <LoadingSpin class="loading"></LoadingSpin>
@@ -102,7 +113,7 @@ onErrorCaptured(onerrorcaptured);
     </Suspense>
     <Suspense >
       <template #default>
-        <CreatorCard></CreatorCard>
+        <CreatorCard>Related Creators</CreatorCard>
       </template>
       <template #fallback>
         <LoadingSpin class="loading"></LoadingSpin>
@@ -110,7 +121,7 @@ onErrorCaptured(onerrorcaptured);
     </Suspense>
     <Suspense >
       <template #default>
-        <ComicCard></ComicCard>
+        <ComicCard>Related Comics</ComicCard>
       </template>
       <template #fallback>
         <LoadingSpin class="loading"></LoadingSpin>
@@ -118,7 +129,7 @@ onErrorCaptured(onerrorcaptured);
     </Suspense>
     <Suspense >
       <template #default>
-        <CharacterCard></CharacterCard>
+        <CharacterCard>Related Characters</CharacterCard>
       </template>
       <template #fallback>
         <LoadingSpin class="loading"></LoadingSpin>

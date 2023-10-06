@@ -5,23 +5,32 @@ import type { Axios } from 'axios';
 import { inject } from 'vue';
 import { useRoute } from 'vue-router';
 
+// Import the Axios instance and inject it as a dependency
 const axios:Axios|undefined = inject('axios')
+// Import the route utility
 const route = useRoute()
 
+// Fetch creators data for a Marvel series using Axios
 const data:MarvelResponse = await new Promise((resolve, reject) => {
   axios?.get(`v1/public/series/${route.params.id}/creators`, {}).then((res) => {
-    console.log(res);
-    resolve(res);
-  }).catch(() => {
+    // Resolve the promise with the response data
+	resolve(res);
+  }).catch((err) => {
+	// Handle errors by logging them
+	console.log(err);
+
+	// Reject the promise with an empty object
     reject({});
   })
 });
+
+// Extract the creators data from the fetched response
 const creators:Array<FullCreator> =  data.data.data.results;
 </script>
 
 <template>
 	<div class="main-container">
-		<h1 v-if="creators.length>0">Related Creators</h1>
+		<h1 v-if="creators.length>0"><slot></slot></h1>
 		<div class="list-container">
 			<div v-for="(creator, index) in creators" :key="`c`+index" class="story-card">
 					<h2 class="container">First Name: {{ creator.firstName }}</h2>

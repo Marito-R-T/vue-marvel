@@ -1,5 +1,3 @@
-import type { Serie } from "./Serie"
-
 export type DataSerie = {
   results: Array<any>
 }

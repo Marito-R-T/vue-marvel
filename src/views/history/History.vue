@@ -1,19 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { useHistoryStore, useSeriesStore } from '@/stores/series';
-import { onMounted } from 'vue';
 import SerieCard from '@/components/cards/SerieCard.vue';
 import HistorySerieCard from '@/components/cards/HistorySerieCard.vue';
 
 const store = useSeriesStore()
 const storeHistory = useHistoryStore()
-
-const mounted = () => {
-  console.log(store.getSeries)
-  console.log(storeHistory.getSeries)
-};
-
-onMounted(mounted);
 </script>
 
 <template>
@@ -36,6 +28,7 @@ onMounted(mounted);
       />
     </div>
     <div class="history-container">
+      <h1 class="full-width">HISTORY</h1>
       <HistorySerieCard 
         v-for="(serie, index) in storeHistory.getSeries" 
         :key="'h'+index"

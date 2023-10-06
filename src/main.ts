@@ -11,8 +11,12 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+
+
+const marvelURL = import.meta.env.VITE_MARVEL_URL;
+console.log(marvelURL)
 app.use(axios, {
-    baseUrl: 'https://gateway.marvel.com/',
+    baseUrl: marvelURL
 })
 
 app.mount('#app')

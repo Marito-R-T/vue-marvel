@@ -5,23 +5,33 @@ import type { Axios } from 'axios';
 import { inject } from 'vue';
 import { useRoute } from 'vue-router';
 
+// Import the Axios instance and inject it as a dependency
 const axios:Axios|undefined = inject('axios')
+
+// Import the route utility
 const route = useRoute()
 
+// Fetch comics data for a Marvel series using Axios
 const data:MarvelResponse = await new Promise((resolve, reject) => {
   axios?.get(`v1/public/series/${route.params.id}/comics`, {}).then((res) => {
-    console.log(res);
+    // Resolve the promise with the response data
     resolve(res);
-  }).catch(() => {
+  }).catch((err) => {
+    // Handle errors by logging them
+	console.log(err);
+
+    // Reject the promise with an empty object
     reject({});
   })
 });
+
+// Extract the comics data from the fetched response
 const comics:Array<FullComic> =  data.data.data.results;
 </script>
 
 <template>
 	<div class="main-container">
-		<h1 v-if="comics.length>0">Related Comics</h1>
+		<h1 v-if="comics.length>0"><slot></slot></h1>
 		<div class="list-container">
 			<div v-for="(comic, index) in comics" :key="`co`+index" class="story-card">
 				<div class="half-container">

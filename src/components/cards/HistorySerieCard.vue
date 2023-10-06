@@ -1,21 +1,15 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
 
+//Define properties used in the component
 defineProps<{
 	title: String,
 	image: String,
 	id: Number
 }>()
 
-const mounted = () => {
-};
-
-onMounted(mounted);
-
 </script>
 
 <template>
-  <h1 class="event-link">HISTORY</h1>
 	<router-link
     class="event-link"
     :to="`/detail/${id}`"
@@ -90,7 +84,6 @@ onMounted(mounted);
 }
 img {
 	max-height: 100px;
-  width: 20%;
 	border: 2px outset;
 	border-color: rgb(124, 124, 124);
 }

@@ -53,7 +53,6 @@ export const useHistoryStore = defineStore('history', {
       const find = this.series.find((s) => s.id === serie.id);
       if(find) {
         this.series = this.series.filter((s) => s.id != serie.id);
-        console.log(this.series);
         return true;
       }
       return false;

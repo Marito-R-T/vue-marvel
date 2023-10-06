@@ -1,27 +1,37 @@
 <script setup lang="ts">
 import type { MarvelResponse } from '@/types/MarvelResponse';
-import type { FullStory, Story } from '@/types/Story';
+import type { FullStory } from '@/types/Story';
 import type { Axios } from 'axios';
 import { inject } from 'vue';
 import { useRoute } from 'vue-router';
 
+// Import the Axios instance and inject it as a dependency
 const axios:Axios|undefined = inject('axios')
+
+// Import the route utility
 const route = useRoute()
 
+// Fetch story data for a Marvel series using Axios
 const data:MarvelResponse = await new Promise((resolve, reject) => {
   axios?.get(`v1/public/series/${route.params.id}/stories`, {}).then((res) => {
-    console.log(res);
-    resolve(res);
-  }).catch(() => {
+    // Resolve the promise with the response data
+	resolve(res);
+  }).catch((err) => {
+	// Handle errors by logging them
+	console.log(err);
+
+	// Reject the promise with an empty object
     reject({});
   })
 });
+
+// Extract the stories data from the fetched response
 const stories:Array<FullStory> =  data.data.data.results;
 </script>
 
 <template>
 	<div class="main-container">
-		<h1 v-if="stories.length>0">Related Stories</h1>
+		<h1 v-if="stories.length>0"><slot></slot></h1>
 		<div class="list-container">
 			<div v-for="(story, index) in stories" :key="`s`+index" class="story-card">
 				<div class="half-container">
