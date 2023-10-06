@@ -26,6 +26,8 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ```sh
 npm install
 ```
+
+### Setup Environment Variables
 ```.env
 #Marvel api url
 VITE_MARVEL_URL=https://gateway.marvel.com/
