@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
 import type { HistorySerie, Serie } from '@/types/Serie';
+import { useStorage } from '@vueuse/core'
 
 export const useSeriesStore = defineStore('save', {
   state: () => ({
-    series: [] as Array<Serie>,
+    series: useStorage('saved',[] as Array<Serie>),
   }),
   getters:{
     getSeries: (state) => {
@@ -28,7 +29,7 @@ export const useSeriesStore = defineStore('save', {
 
 export const useHistoryStore = defineStore('history', {
   state: () => ({
-    series: [] as Array<HistorySerie>,
+    series: useStorage('history',[] as Array<HistorySerie>),
   }),
   getters:{
     getSeries: (state) => {
